@@ -27,28 +27,18 @@
     "lint": "tslint 'src/**/*.{ts,tsx}'",
     "precommit": "lint-staged",
     "prepush": "npm run build",
-    "postcheckout": "pull-lock"
+    "postmerge": "pull-lock"
   },
   "lint-staged": {
-    "*.@(ts|tsx)": [
-      "tslint --fix",
-      "git add"
-    ]
+    "*.@(ts|tsx)": ["tslint --fix", "git add"]
   },
   "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(.test)\\.(ts|tsx)$",
-    "testPathIgnorePatterns": [
-      "\\.snap$",
-      "<rootDir>/node_modules/"
-    ],
+    "testPathIgnorePatterns": ["\\.snap$", "<rootDir>/node_modules/"],
     "cacheDirectory": ".jest/cache"
   }
 }

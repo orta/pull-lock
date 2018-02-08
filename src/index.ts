@@ -3,4 +3,4 @@
 // tslint:disable-next-line:no-console
 console.log("hello world!")
 // tslint:disable-next-line:no-console
-console.log(process.argv)
+console.log(process.env.GIT_PARAMS)
