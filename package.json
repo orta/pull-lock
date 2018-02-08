@@ -10,8 +10,9 @@
   },
   "devDependencies": {
     "@types/jest": "^19.2.3",
+    "@types/node": "^8.9.1",
     "danger": "^0.18.0",
-    "husky": "^0.13.3",
+    "husky": "^0.14.3",
     "jest": "^20.0.0",
     "jest-cli": "^22.2.1",
     "lint-staged": "^3.2.5",
@@ -25,7 +26,8 @@
     "build": "tsc",
     "lint": "tslint 'src/**/*.{ts,tsx}'",
     "precommit": "lint-staged",
-    "prepush": "npm run build"
+    "prepush": "npm run build",
+    "postcheckout": "pull-lock"
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
