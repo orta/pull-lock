@@ -5,6 +5,9 @@
   "main": "build/index.js",
   "author": "xtina-starr <c.thompsonms@gmail.com> & Art.sy Inc",
   "license": "MIT",
+  "bin": {
+    "pull-lock": "./build/index.js"
+  },
   "devDependencies": {
     "@types/jest": "^19.2.3",
     "danger": "^0.18.0",
