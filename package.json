@@ -9,17 +9,17 @@
     "pull-lock": "./build/index.js"
   },
   "devDependencies": {
-    "@types/jest": "^19.2.3",
+    "@types/jest": "^23.3.2",
     "@types/node": "^10.11.2",
-    "danger": "^0.18.0",
-    "husky": "^0.14.3",
-    "jest": "^20.0.0",
-    "jest-cli": "^22.2.1",
-    "lint-staged": "^3.2.5",
-    "ts-jest": "^20.0.0",
-    "ts-node": "^3.0.0",
-    "tslint": "^5.2.0",
-    "typescript": "^2.3.2"
+    "danger": "^4.0.2",
+    "husky": "^1.0.1",
+    "jest": "^23.6.0",
+    "jest-cli": "^23.6.0",
+    "lint-staged": "^7.3.0",
+    "ts-jest": "^23.10.2",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.1"
   },
   "scripts": {
     "type-check": "tsc --noEmit",
