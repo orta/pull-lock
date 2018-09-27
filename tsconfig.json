@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "build"
+    "outDir": "build",
+    "lib": ["es2015"]
   }
 }
