@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+import { exec } from "child_process"
 
-// tslint:disable-next-line:no-console
-console.log("hello world!")
+const diffCommand = `git diff-tree -r --name-only --no-commit-id ORIG_HEAD HEAD`
+exec(diffCommand, (err, stdout, stderr) => stdout)
