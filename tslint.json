@@ -3,5 +3,6 @@
     "tslint:recommended"
   ],
   "rules": {
+    "semicolon": [false]
   }
 }
