@@ -6,3 +6,11 @@ dangerfile.ts
 tsconfig.json
 tslint.sjon
 .gitignore
+.jest
+tmp
+example
+*.tgz
+yarn*
+tslint.json
+.vscode/
+*.test.*
