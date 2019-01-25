@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "build"
-  }
+    "outDir": "build",
+    "lib": ["es2016"]
+  },
+  "exclude": ["index.test.ts"]
 }
+

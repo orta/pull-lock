@@ -60,3 +60,6 @@ typings/
 build/
 package-lock.json
 
+tmp
+!tmp/pacakge_ex.json
+.jest

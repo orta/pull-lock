@@ -1,11 +1,13 @@
 # Pull Lock
 
-Automate tasks that happen on when you pull in new code. 
+Automate tasks that happen when you pull in new code.
 
 ```json
 {
-  "scripts": {
-    "postcheckout": "pull-lock"
+  "husky": {
+    "hooks": {
+      "post-merge": "pull-lock"
+    }
   },
   "pull-lock": {
     "yarn.lock": "yarn install",
@@ -15,9 +17,9 @@ Automate tasks that happen on when you pull in new code.
 ```
 
 Like [lint-staged](https://github.com/okonet/lint-staged) for when you've `git pull`ed. You set up a 
-[husky](https://github.com/typicode/husky) `"postcheckout"` hook which is passed to the CLI tool `pull-lock`. 
-`pull-lock` will then compare the changedfiles to the config and execute commands for you automatically.
+[husky](https://github.com/typicode/husky) `"post-merge"` hook which runs the CLI tool `pull-lock`. 
 
+`pull-lock` will then compare the changed files to the config and execute commands for you automatically.
 
 ## Installation and setup
 
@@ -26,8 +28,10 @@ Like [lint-staged](https://github.com/okonet/lint-staged) for when you've `git p
 
 ```diff json
 {
-  "scripts": {
-+   "postcheckout": "pull-lock"
+  "husky": {
+    "hooks": {
++     "post-merge": "pull-lock"
+    }
   },
 + "pull-lock": {
 +   "yarn.lock": "yarn install",
@@ -35,8 +39,11 @@ Like [lint-staged](https://github.com/okonet/lint-staged) for when you've `git p
 }
 ```
 
-Then when you run a `git pull`, `pull-lock` will check for `yarn.lock` inside the diffed files and run the
-scripts inside your config files.
+Then when you run a `git pull` or `git merge`, `pull-lock` will check to see if `yarn.lock` has changed the 
+diffed files and run the scripts inside your config files.
+
+In the case above, if someone has made dependency changes which edit the `yarn.lock` then `yarn install` will
+be called automatically for you.
 
 ## Advanced config
 
