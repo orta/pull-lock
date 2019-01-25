@@ -18,11 +18,12 @@ git commit -m "Init"
 
 node node_modules/husky/husky.js install node_modules/husky
 
+# Make a new clone
 cd ..
-git
+git clone ./project second
+cd second
 
 # Make a new commit editing file on a new branch 
-git checkout -b new_branch
 echo "Hi" > file.md
 git add file.md
 git commit -m "Edit the file.md"
@@ -31,13 +32,17 @@ echo "Hi also" > file2.md
 git add file2.md
 git commit -m "Edit the file2.md"
 
+# Go back to the main repo and set this as a remote
+cd ..
+cd project
+git remote add second ../second
+
 # OK, now we go back to master and merge in those changes
 # this is what should trigger pull-lock
-git checkout master
 
-echo "About to merge a branch, pull-lock should note this:"
+echo "About to pull from a remote, pull-lock should note this:"
 sleep 1
-HUSKY_DEBUG="*" git merge new_branch
+DEBUG="*" git pull second master
 
 echo "-----"
 echo "done, wiping the folder"

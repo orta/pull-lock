@@ -55,3 +55,19 @@ settings in either:
 * a `pull-lock.config.js` file in JS format
 
  
+## Working on Pull Lock
+
+```sh
+# clone it
+git clone https://github.com/orta/pull-lock.git
+cd pull-lock
+
+# set up deps
+yarn
+# verify tests
+yarn jest
+# Run the integration scripts to see it on a merge and on a pull
+yarn integrate:pull
+# or
+yarn integrate:merge
+```

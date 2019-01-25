@@ -25,7 +25,10 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "build": "tsc",
-    "lint": "tslint 'src/**/*.{ts,tsx}'"
+    "lint": "tslint 'src/**/*.{ts,tsx}'",
+    "integrate:pull": "yarn build; rm -rf tmp/project/ tmp/second; sh example/run-script-pull.sh",
+    "integrate:merge": "yarn build; rm -rf tmp/project/ tmp/second; sh example/run-script-merge.sh"
+
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
