@@ -1,5 +1,4 @@
 #! /usr/bin/env node
-import { exec } from "child_process"
 
 import { spawn } from "child_process"
 import { readFileSync } from "fs"
@@ -10,7 +9,7 @@ import debug from "debug" // used by husky
 import * as execa from "execa" // used by husky
 
 const d = debug(`pull-lock`)
-d("Hello world!")
+d("Started Pull Lock!")
 
 // Suppress logging when in tests
 const isJest = typeof jest !== "undefined"
@@ -21,7 +20,7 @@ const log = isJest ? () => "" : console.log
  * Grabs merge info out of the environment which git sets for the hook,
  * and it will also grab the current branch
  */
-export const getPostMergeInfo = (env: any) => {
+export const getPostMergeInfo = (cwd: string, env: any) => {
   const key = Object.keys(env).find((k) => k.includes("GITHEAD"))
   const sha = `${key}`.replace("GITHEAD_", "")
   return {
@@ -29,11 +28,13 @@ export const getPostMergeInfo = (env: any) => {
     action: env.GIT_REFLOG_ACTION as string,
     fromBranch: env[key],
     sha,
-    // TODO: get branch properly via git, this might make this async
-    // git rev-parse --abbrev-ref HEAD
-    toBranch: "master",
+    toBranch: getGitMergeReference(cwd),
   }
 }
+
+/** Grab the current branch e.g. master, or dev or whatever */
+export const getGitMergeReference = (cwd: string) =>
+  execa.shellSync("git rev-parse --abbrev-ref HEAD", { cwd, env: process.env }).stdout
 
 /**
  * Goes from the information in the env to the real commit shas
@@ -41,10 +42,15 @@ export const getPostMergeInfo = (env: any) => {
  */
 
 export const getDiffInfoFromReflog = (cwd: string, info: ReturnType<typeof getPostMergeInfo>) => {
-  // TODO: Use a unix app to only grab the last 10 lines from this probably very long file
   const refLogFilePath = join(cwd, ".git", "logs", "refs", "heads", info.toBranch)
-  const refLog = readFileSync(refLogFilePath, "utf8")
-
+  // Grab the last 10 lines, as these files can be _very_ long
+  let refLog: string
+  try {
+    const { stdout } = execa.shellSync(`head -n '${refLogFilePath}'`, { cwd, env: process.env })
+    refLog = stdout
+  } catch (error) {
+    refLog = readFileSync(refLogFilePath, "utf8")
+  }
   // Get the last reflog for now, probably isn't enough for prod though
   const lines = refLog.split("\n")
   const last = lines[lines.length - 2]
@@ -100,12 +106,12 @@ export const runPullLock = (cwd: string, files: string[], config: cosmiconfig.Co
 }
 
 /** Runs pull-lock */
-const run = (cwd: string) => {
+const run = async (cwd: string) => {
   // Grab the exposed vars from the ENV
-  const mergeConfig = getPostMergeInfo(process.env)
+  const mergeConfig = await getPostMergeInfo(cwd, process.env)
   d("Found merge from " + mergeConfig.fromBranch + " with sha " + mergeConfig.sha + " via env")
 
-  // Use those envs to get the before and after sha from gits internal ref log
+  // Use those env vars to get the before and after sha from gits internal ref log
   const diffConfig = getDiffInfoFromReflog(cwd, mergeConfig)
   d(`From ${diffConfig.fromSha} to ${diffConfig.toSha}`)
 

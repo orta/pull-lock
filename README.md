@@ -19,7 +19,9 @@ Automate tasks that happen when you pull in new code.
 Like [lint-staged](https://github.com/okonet/lint-staged) for when you've `git pull`ed. You set up a 
 [husky](https://github.com/typicode/husky) `"post-merge"` hook which runs the CLI tool `pull-lock`. 
 
-`pull-lock` will then compare the changed files to the config and execute commands for you automatically.
+`pull-lock` will then compare the changed files to the config and execute commands for you automatically. 
+
+Pull Lock only uses dependencies which Husky also uses, and so it adds no new dependencies to your tree.
 
 ## Installation and setup
 

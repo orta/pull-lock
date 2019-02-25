@@ -19,7 +19,9 @@ const ortasENV = {
 }
 
 it("getPostMergeInfo", () => {
-  const config = getPostMergeInfo(ortasENV)
+  mockExeca.mockReturnValueOnce({ stdout: "master" })
+
+  const config = getPostMergeInfo(".", ortasENV)
 
   expect(config).toMatchInlineSnapshot(`
 Object {
@@ -34,9 +36,10 @@ Object {
 it("getDiffInfoFromReflog", () => {
   // tslint:disable-next-line:max-line-length
   const reflog = "63d31120cb6d1d1159aba3f87f8b0d264a3afd2f fa244845f3dc46716081915124df1686cbcaa4c9 Orta Therox <orta.therox@gmail.com> 1548432794 -0500  merge new_branch: Fast-forward"
-  mockReadFileSync.mockReturnValue(reflog + "\n")
+  mockExeca.mockReturnValueOnce({ stdout: "master" })
+  mockExeca.mockReturnValueOnce({ stdout: reflog + "\n" })
 
-  const config = getPostMergeInfo(ortasENV)
+  const config = getPostMergeInfo(".", ortasENV)
   expect(getDiffInfoFromReflog(".", config)).toMatchInlineSnapshot(`
 Object {
   "fromSha": "63d31120cb6d1d1159aba3f87f8b0d264a3afd2f",
