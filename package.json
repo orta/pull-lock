@@ -36,15 +36,9 @@
     ]
   },
   "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
     "transform": {
       ".(ts|tsx)": "ts-jest"
-    },
-    "testRegex": "(.test)\\.(ts|tsx)$"
+    }
   },
   "dependencies": {
     "cosmiconfig": "^5.1.0",
